@@ -1,0 +1,36 @@
+{
+  "name": "projeto18-linkr-backend",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/app.js",
+  "type": "module",
+  "scripts": {
+    "start": "NODE_ENV=production node src/app.js",
+    "dev": "NODE_ENV=development nodemon src/app.js",
+    "migrate": "NODE_ENV=development node src/database/migrate.js",
+    "rollback": "NODE_ENV=development node src/database/rollback.js",
+    "create-migration": "NODE_ENV=development node src/database/createMigration.js",
+    "delete-migration": "NODE_ENV=development node src/database/deleteMigration.js",
+    "lint": "npx prettier --loglevel error --write src && npx eslint src"
+  },
+  "dependencies": {
+    "chalk": "^5.2.0",
+    "dotenv": "^16.0.3",
+    "helmet": "^6.0.1",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "pg": "^8.9.0",
+    "string-strip-html": "^13.1.0",
+    "joi": "^17.7.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20",
+    "eslint": "^8.34.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "8.6.0",
+    "prettier": "^2.8.4"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
