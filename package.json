@@ -10,7 +10,7 @@
     "migrate": "NODE_ENV=development node src/database/migrate.js",
     "rollback": "NODE_ENV=development node src/database/rollback.js",
     "create-migration": "NODE_ENV=development node src/database/createMigration.js",
-    "delete-migration": "NODE_ENV=development node src/database/deleteMigration.js",
+    "delete-migrations": "NODE_ENV=development node src/database/deleteMigration.js",
     "lint": "npx prettier --loglevel error --write src && npx eslint src"
   },
   "dependencies": {

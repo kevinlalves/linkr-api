@@ -14,8 +14,6 @@ app.use(helmet());
 
 app.get('/health-check', (req, res) => res.send());
 
-app.use();
-
 if (process.env.NODE_ENV === 'production') {
   await import('./database/migrate.js');
 }

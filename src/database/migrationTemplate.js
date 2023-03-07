@@ -2,7 +2,7 @@ import db from '../database/database.connection.js';
 
 export const up = async () => {
   try {
-    await db.query();
+    await db.query(``);
   } catch (error) {
     return error;
   }
@@ -10,7 +10,7 @@ export const up = async () => {
 
 export const down = async () => {
   try {
-    await db.query();
+    await db.query(``);
   } catch (error) {
     return error;
   }
