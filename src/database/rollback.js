@@ -1,4 +1,5 @@
 import fs from 'fs';
+import chalk from 'chalk';
 import { lastMigrationPath, migrationListPath } from '../utils/constants/migrations.js';
 
 const rollback = async () => {
@@ -9,7 +10,7 @@ const rollback = async () => {
   } catch (error) {
     if (error.code === 'ENOENT') {
       await fs.promises.writeFile(lastMigrationPath, '-1', 'utf-8');
-      console.log('no migration to rollback');
+      console.log(chalk.blue('no migration to rollback'));
       return;
     } else {
       throw error;
@@ -19,7 +20,7 @@ const rollback = async () => {
   if (lastMigration < 0) return;
 
   const migrationIndex = lastMigration;
-  const rollbackCount = Math.min(Number(process.argv[2]), migrationIndex + 1);
+  const rollbackCount = Math.min(Number(process.argv[2] ? process.argv[2] : 1), migrationIndex + 1);
   let i;
   try {
     for (i = 0; i < rollbackCount; i++) {
@@ -29,10 +30,10 @@ const rollback = async () => {
         throw error;
       }
       await fs.promises.writeFile(lastMigrationPath, `${lastMigration - 1}`, 'utf-8');
-      console.log(`rolled back ${migrationsList[lastMigration - i]} successfully!`);
+      console.log(chalk.green(`rolled back ${migrationsList[lastMigration - i]} successfully!`));
     }
   } catch (error) {
-    console.log(`error running rollback ${migrationsList[lastMigration - i]}`);
+    console.log(chalk.red(`error running rollback ${migrationsList[lastMigration - i]}`));
     console.log(error);
   }
   if (process.env.NODE_ENV === 'development') process.exit();

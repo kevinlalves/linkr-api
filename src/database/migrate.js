@@ -1,4 +1,5 @@
 import fs from 'fs';
+import chalk from 'chalk';
 import { lastMigrationPath, migrationListPath } from '../utils/constants/migrations.js';
 
 const migrate = async () => {
@@ -26,10 +27,10 @@ const migrate = async () => {
       if (error) {
         throw error;
       }
-      console.log(`migrated ${migrationsList[migrationIndex]} successfully!`);
+      console.log(chalk.green(`migrated ${migrationsList[migrationIndex]} successfully!`));
     } catch (error) {
       await fs.promises.writeFile(lastMigrationPath, `${migrationIndex - 1}`, 'utf-8');
-      console.log(`error running migration ${migrationsList[migrationIndex]}`);
+      console.log(chalk.red(`error running migration ${migrationsList[migrationIndex]}`));
       console.log(error);
       return;
     }

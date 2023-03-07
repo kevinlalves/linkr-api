@@ -1,4 +1,5 @@
 import fs from 'fs';
+import chalk from 'chalk';
 import { lastMigrationPath, migrationListPath } from '../utils/constants/migrations.js';
 
 const deleteMigration = async () => {
@@ -23,20 +24,16 @@ const deleteMigration = async () => {
     while (migrationIndex > lastMigration) {
       await fs.promises.unlink(`src/migrations/${migrationsList[migrationIndex]}.js`);
 
-      console.log(`deleted ${migrationsList[migrationIndex]} successfully!`);
+      console.log(chalk.green(`deleted ${migrationsList[migrationIndex]} successfully!`));
+      migrationsList.pop();
       migrationIndex--;
     }
   } catch (error) {
-    console.log(`error running delete on ${migrationsList[migrationIndex]}`);
+    console.log(chalk.red(`error running delete on ${migrationsList[migrationIndex]}`));
     console.log(error);
-    return;
   }
 
-  await fs.promises.writeFile(
-    migrationListPath,
-    migrationsList.length ? migrationsList.slice(0, migrationIndex + 1).join('\n') : '' + '\n',
-    'utf-8'
-  );
+  await fs.promises.writeFile(migrationListPath, migrationsList.length ? migrationsList.join('\n') : '', 'utf-8');
   if (process.env.NODE_ENV === 'development') process.exit();
 };
 
