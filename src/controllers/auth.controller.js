@@ -12,23 +12,23 @@ export const signIn = async (req, res) => {
 
   console.log(chalk.cyan('POST /sign-in'));
   try {
-    const {
-      rows: [user],
-    } = await getUserBy('email', email);
+    const { rows: [user], } = await getUserBy('email', email);
     if (!user) {
+     
       res.status(401).send('Invalid credentials');
       return;
     }
-
+  
     const isValidPassword = await bcrypt.compare(password, user.password);
     if (!isValidPassword) {
       res.status(401).send('Invalid credentials');
       return;
     }
-
-    const token = jwt.sign({ userId: user.id }, jwtSecret, { expiresIn: jwtTokenDuration });
-
-    res.send({ token });
+   
+    const token = "testeToken"
+    //jwt.sign({ userId: user.id }, jwtSecret, { expiresIn: jwtTokenDuration });
+    console.log(user)
+    res.send({ token, user});
   } catch (error) {
     internalError(error, res);
   }
