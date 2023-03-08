@@ -52,3 +52,21 @@ export const signUp = async (req, res) => {
     internalError(error, res);
   }
 };
+
+export const userMe = async (req, res) => {
+  console.log('rodou userMe (buscar informações usuario)');
+  const { userId } = res.locals;
+  try {
+    const {
+      rows: [user],
+    } = await getUserBy('id', userId);
+    if (!user) {
+      res.status(401).send('Invalid credentials');
+      return;
+    }
+
+    res.send({ user });
+  } catch (error) {
+    internalError(error, res);
+  }
+};
