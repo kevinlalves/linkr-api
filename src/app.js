@@ -3,6 +3,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import chalk from 'chalk';
 import dotenv from 'dotenv';
+import { authRouter } from './routes/auth.router.js';
 dotenv.config();
 
 const app = express();
@@ -13,6 +14,8 @@ app.use(json());
 app.use(helmet());
 
 app.get('/health-check', (req, res) => res.send());
+
+app.use(authRouter);
 
 if (process.env.NODE_ENV === 'production') {
   await import('./database/migrate.js');
