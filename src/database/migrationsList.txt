@@ -3,3 +3,4 @@ createPosts
 createLikes
 createHashtags
 createHashtagPosts
+addCreatedAtToPosts
