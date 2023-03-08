@@ -11,7 +11,7 @@ const createMigration = async () => {
     return;
   }
 
-  await fs.promises.appendFile(migrationListPath, migrationName, 'utf-8');
+  await fs.promises.appendFile(migrationListPath, migrationName + '\n', 'utf-8');
   await fs.promises.writeFile(`./src/migrations/${migrationName}.js`, migrationTemplate, 'utf-8');
   console.log(chalk.green(`migration ${migrationName} succefully created`));
 };
