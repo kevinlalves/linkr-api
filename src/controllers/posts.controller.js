@@ -1,5 +1,6 @@
 import chalk from 'chalk';
 import { createPost, getPosts } from '../repositories/posts.repository.js';
+import { foreingKeyConstraint } from '../utils/constants/postgres.js';
 import { standardPostsBatch } from '../utils/constants/queries.js';
 import internalError from '../utils/functions/internalError.js';
 
@@ -25,6 +26,11 @@ export const createPostController = async (req, res) => {
 
     res.status(201).send();
   } catch (error) {
+    if (error.code === foreingKeyConstraint) {
+      res.status(401).send('Invalid user');
+      return;
+    }
+
     internalError(error, res);
   }
 };
