@@ -19,7 +19,7 @@ app.use(helmet());
 app.get('/health-check', (req, res) => res.send());
 
 app.use(authRouter);
-app.use(hashtagRouter);
+app.use('/hashtags', hashtagRouter);
 app.use('/posts', postRouter);
 app.use('/users', userRouter);
 
