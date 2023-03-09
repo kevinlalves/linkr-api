@@ -123,7 +123,8 @@ CREATE TABLE public.posts (
     id integer NOT NULL,
     content text NOT NULL,
     shared_url text NOT NULL,
-    user_id integer NOT NULL
+    user_id integer NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL
 );
 
 
@@ -238,17 +239,15 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 -- Data for Name: posts; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public.posts VALUES (3, 'Hellooooooo text here, segue meu link fodastico!', 'https://9anime.pl', 1, '2023-03-09 03:28:57.321866+00');
+INSERT INTO public.posts VALUES (4, 'Hellooooooo text here, segue meu link fodastico!', 'https://9anime.pl', 1, '2023-03-09 03:31:17.158694+00');
 
 
 --
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public.users VALUES (3, 'kevin@gmail.com', '$2b$10$dLtH1ZFREG3sY8FA1Q2hheckj.TV/MX3vlYLcJ0rva1HEhVcNjeHq', 'https://google.com', 'transao', '2023-03-08 01:31:25.617374+00');
-INSERT INTO public.users VALUES (5, 'leonardo@gmail.com', '$2b$10$Z5iTIttORHWfVLwP0W.qeOXNjdwXUIUn8eOijJCCtjTikpupy1.z2', 'https://google.com', 'leozin', '2023-03-08 10:54:08.291429+00');
-INSERT INTO public.users VALUES (13, 'tarik@gmail.com', '$2b$10$CSaCTNynxKfWRO4G61LBvu48miu8s72pQzP4cD3AKEmvBW9HymDyi', 'https://google.com', 'matzero', '2023-03-08 10:55:00.312727+00');
-INSERT INTO public.users VALUES (15, 'leo@gmail.com', '$2b$10$69JHG0HmQiBmYoEoAKtY2.yJ..W4M3TOc9GabNs1kwZaT//YkxLEi', 'https://google.com', 'leo', '2023-03-08 10:57:41.138203+00');
-INSERT INTO public.users VALUES (16, 'jose@test.com', '$2b$10$1us75wiRvk43CLmJcrN06Olo0IHrXxNwJDk0nhJyXYaY/wFc2spYm', 'https://google.com', 'pimpolho', '2023-03-08 22:35:03.720432+00');
+INSERT INTO public.users VALUES (1, 'joses@test.com', '$2b$10$hQ4psHjEFlq3hQ7B1InGDejj9rkOEtPd9cWYjcmERNkjeCy4JYs0C', 'https://google.com', 'jo', '2023-03-09 03:28:05.788613+00');
 
 
 --
@@ -276,14 +275,14 @@ SELECT pg_catalog.setval('public.likes_id_seq', 1, false);
 -- Name: posts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.posts_id_seq', 1, false);
+SELECT pg_catalog.setval('public.posts_id_seq', 4, true);
 
 
 --
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 16, true);
+SELECT pg_catalog.setval('public.users_id_seq', 1, true);
 
 
 --

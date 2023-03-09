@@ -10,7 +10,7 @@ export const getUserBy = (param, value) =>
         username,
         picture_url AS "pictureUrl",
         created_at AS "createdAt"
-      from users where ${param} = $1`,
+      FROM users where ${param} = $1`,
     [value]
   );
 

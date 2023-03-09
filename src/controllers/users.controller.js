@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import { getUserBy } from '../repositories/users.repository.js';
-import { userSerializer } from '../serializers/user.js';
+import { userSerializer } from '../serializers/user.serializer.js';
 import internalError from '../utils/functions/internalError.js';
 
 export const getCurrentUser = async (req, res) => {
@@ -16,7 +16,7 @@ export const getCurrentUser = async (req, res) => {
       return;
     }
 
-    res.json(userSerializer({ user }));
+    res.send(userSerializer({ user }));
   } catch (error) {
     internalError(error, res);
   }

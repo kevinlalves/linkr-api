@@ -11,7 +11,7 @@ export const getPostsController = async (req, res) => {
   try {
     const { rows: posts } = await getPosts({ desc, per, page });
 
-    res.json(posts);
+    res.send(posts);
   } catch (error) {
     internalError(error, res);
   }
