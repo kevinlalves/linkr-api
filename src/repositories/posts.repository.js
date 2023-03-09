@@ -6,10 +6,16 @@ export const createPost = ({ content, sharedUrl, userId }) =>
 export const getPosts = ({ desc, per, page }) =>
   db.query(
     `
-    SELECT * FROM posts
-    ORDER BY created_at ${desc ? 'DESC' : 'ASC'}
-    OFFSET $1
-    LIMIT $2;
+      SELECT
+        id,
+        content,
+        shared_url AS "sharedUrl",
+        user_id AS "userId",
+        created_at AS "createdAt"
+      FROM posts
+      ORDER BY created_at ${desc ? 'DESC' : 'ASC'}
+      OFFSET $1
+      LIMIT $2;
   `,
     [per * (page - 1), per]
   );
