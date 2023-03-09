@@ -10,7 +10,7 @@ const authenticate = async (req, res, next) => {
   }
   try {
     const { userId } = jwt.verify(token, jwtSecret);
-    req.Params = { userId, ...req.Params };
+    req.Params = req.Params ? { userId, ...req.Params } : { userId };
   } catch (error) {
     res.status(401).send();
     return;

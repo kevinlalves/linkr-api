@@ -19,7 +19,7 @@ app.get('/health-check', (req, res) => res.send());
 
 app.use(authRouter);
 app.use('/posts', postRouter);
-app.use('users', userRouter);
+app.use('/users', userRouter);
 
 if (process.env.NODE_ENV === 'production') {
   await import('./database/migrate.js');
