@@ -16,7 +16,7 @@ export const getPostsController = async (req, res) => {
       rows.map((post) => {
         return urlMetadata(post.sharedUrl).then(
           (metadata) => {
-            const { url, title, image, description } = metadata;\
+            const { url, title, image, description } = metadata;
             return { ...post, url, title, image, description };
           },
           (err) => {
