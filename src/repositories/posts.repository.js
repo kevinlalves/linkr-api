@@ -7,7 +7,7 @@ export const getPosts = ({ desc, per, page }) =>
   db.query(
     `
       SELECT
-        p.id AS postId,
+        p.id AS "postId",
         p.content AS content,
         p.shared_url AS "sharedUrl",
         p.created_at AS "createdAt",
