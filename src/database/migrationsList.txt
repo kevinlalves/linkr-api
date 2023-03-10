@@ -4,3 +4,4 @@ createLikes
 createHashtags
 createHashtagPosts
 addCreatedAtToPosts
+removeMentionsFromHashtags
