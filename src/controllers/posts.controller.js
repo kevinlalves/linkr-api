@@ -2,15 +2,12 @@ import chalk from 'chalk';
 import urlMetadata from 'url-metadata';
 import { createPost, getPosts } from '../repositories/posts.repository.js';
 import { foreingKeyConstraint } from '../utils/constants/postgres.js';
-import { standardPostsBatch } from '../utils/constants/queries.js';
 import internalError from '../utils/functions/internalError.js';
 
 export const getPostsController = async (req, res) => {
-  const { desc = true, per = standardPostsBatch, page = 1 } = req.Params;
-
   console.log(chalk.cyan('GET /posts'));
   try {
-    const { rows } = await getPosts({ desc, per, page });
+    const { rows } = await getPosts();
 
     const posts = await Promise.all(
       rows.map((post) => {
