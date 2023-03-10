@@ -7,13 +7,16 @@ export const getPosts = ({ desc, per, page }) =>
   db.query(
     `
       SELECT
-        id,
-        content,
-        shared_url AS "sharedUrl",
-        user_id AS "userId",
-        created_at AS "createdAt"
-      FROM posts
-      ORDER BY created_at ${desc ? 'DESC' : 'ASC'}
+        p.id AS "postId",
+        p.content AS content,
+        p.shared_url AS "sharedUrl",
+        p.created_at AS "createdAt",
+        u.username AS "username",
+        u.picture_url AS "pictureUrl"
+      FROM posts p
+      JOIN users u ON p.user_id = u.id
+
+      ORDER BY "createdAt" ${desc ? 'DESC' : 'ASC'}
       OFFSET $1
       LIMIT $2;
   `,
