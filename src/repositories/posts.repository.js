@@ -1,7 +1,14 @@
 import db from '../database/database.connection.js';
 
 export const createPost = ({ content, sharedUrl, userId }) =>
-  db.query('INSERT into posts (content, shared_url, user_id) values ($1, $2, $3);', [content, sharedUrl, userId]);
+  db.query(
+    `
+  INSERT INTO posts
+      (content, shared_url, user_id)
+  VALUES ($1, $2, $3);
+  `,
+    [content, sharedUrl, userId]
+  );
 
 export const getPosts = () =>
   db.query(
