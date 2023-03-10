@@ -1,7 +1,7 @@
 import Joi from 'joi';
 
 export const createPostSchema = Joi.object({
-  content: Joi.string().required(),
+  content: Joi.string(),
   sharedUrl: Joi.string()
     .uri({ scheme: ['http', 'https'] })
     .required(),
