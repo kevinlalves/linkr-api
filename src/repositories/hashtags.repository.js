@@ -24,3 +24,7 @@ export const addHashtagName = (hashtag) => {
 export const addHashtagPost = (hashtagId, postId) => {
   return db.query(`INSERT INTO hashtag_posts (hashtag_id, post_id) VALUES ($1, $2);`, [hashtagId, postId]);
 };
+
+export const delHashtagPost = (hashtagId, postId) => {
+  return db.query(`DELETE hashtag_posts WHERE hashtag_id = $1 AND post_id = $2`, [hashtagId, postId]);
+};
