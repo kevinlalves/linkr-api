@@ -1,16 +1,14 @@
 import chalk from 'chalk';
 import urlMetadata from 'url-metadata';
+import { addHashtagName, addHashtagPost, searchHashtagName } from '../repositories/hashtags.repository.js';
 import { createPost, getPosts } from '../repositories/posts.repository.js';
 import { foreingKeyConstraint } from '../utils/constants/postgres.js';
-import { standardPostsBatch } from '../utils/constants/queries.js';
 import internalError from '../utils/functions/internalError.js';
 
 export const getPostsController = async (req, res) => {
-  const { desc = true, per = standardPostsBatch, page = 1 } = req.Params;
-
   console.log(chalk.cyan('GET /posts'));
   try {
-    const { rows } = await getPosts({ desc, per, page });
+    const { rows } = await getPosts();
 
     const posts = await Promise.all(
       rows.map((post) => {
@@ -35,12 +33,25 @@ export const getPostsController = async (req, res) => {
 
 export const createPostController = async (req, res) => {
   const { content, sharedUrl, userId } = req.Params;
+  const hashtags = content
+    .split(' ')
+    .filter((str) => str[0] === '#' && str.length > 1)
+    .map((str) => str.slice(1));
 
   console.log(chalk.cyan('POST /posts'));
   try {
-    await createPost({ content, sharedUrl, userId });
+    const { rows: posts } = await createPost({ content, sharedUrl, userId });
+    for (const hashtag of hashtags) {
+      const { rows } = await searchHashtagName(hashtag);
+      let id = rows[0]?.id;
+      if (!id) {
+        const { rows } = await addHashtagName(hashtag);
+        id = rows[0].id;
+      }
 
-    res.status(201).send();
+      await addHashtagPost(id, posts[0].id);
+    }
+    res.sendStatus(201);
   } catch (error) {
     if (error.code === foreingKeyConstraint) {
       res.status(401).send('Invalid user');
