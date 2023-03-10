@@ -6,16 +6,18 @@ export const createPost = ({ content, sharedUrl, userId }) =>
 export const getPosts = ({ desc, per, page }) =>
   db.query(
     `
-      SELECT
-        id,
-        content,
-        shared_url AS "sharedUrl",
-        user_id AS "userId",
-        created_at AS "createdAt"
-      FROM posts
-      ORDER BY created_at ${desc ? 'DESC' : 'ASC'}
-      OFFSET $1
-      LIMIT $2;
+    SELECT
+      posts.*,
+      coalesce(count(likes.id), 0) as likes,
+      users.username,
+      users.picture_url
+    FROM posts
+    LEFT JOIN likes ON likes.post_id = posts.id
+    JOIN users ON posts.user_id = users.id
+    GROUP BY posts.id, users.username, users.picture_url
+    ORDER BY posts.created_at ${desc ? 'DESC' : 'ASC'}
+    OFFSET $1
+    LIMIT $2;
   `,
     [per * (page - 1), per]
   );
