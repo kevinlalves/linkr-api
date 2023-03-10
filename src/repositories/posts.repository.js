@@ -26,20 +26,14 @@ export const getPosts = ({ desc, per, page }) =>
 export const getPostsByHashtag = (hashtag) => {
   return db.query(
     `
-    SELECT users.username, users.picture_url , posts.content, posts.shared_url, posts.likes
-    FROM  (
-      SELECT posts.content as content, posts.shared_url, posts.user_id, count(likes.post_id) as likes
-      FROM posts
-      JOIN likes
-        ON likes.post_id = posts.id
-      JOIN hashtag_posts
-        ON hashtag_posts.post_id = posts.id
-      JOIN hashtags
-        ON hashtags.id = hashtag_posts.hashtag_id
-      WHERE hashtags.name = $1
-      GROUP BY posts.id
-    ) posts JOIN users
-      ON users.id = posts.user_id;
+    SELECT posts.*, COALESCE(COUNT(likes.id), 0) as likes, users.username, users.picture_url from posts
+    LEFT JOIN likes ON likes.post_id = posts.id
+    JOIN users ON posts.user_id = users.id
+    JOIN hashtag_posts ON hashtag_posts.post_id = posts.id
+    JOIN hashtags ON hashtags.id = hashtag_posts.hashtag_id
+    WHERE hashtags.name = $1
+    GROUP BY posts.id, users.username, users.picture_url
+    ORDER BY posts.created_at desc;
     `,
     [hashtag]
   );
