@@ -14,7 +14,7 @@ export const getFirstTenMostMentionedHashtags = () => {
 };
 
 export const searchHashtagName = (hashtag) => {
-  return db.query('SELECT id FROM hashtags WHERE hashtag = $1;', [hashtag]);
+  return db.query('SELECT id FROM hashtags WHERE name = $1;', [hashtag]);
 };
 
 export const addHashtagName = (hashtag) => {
